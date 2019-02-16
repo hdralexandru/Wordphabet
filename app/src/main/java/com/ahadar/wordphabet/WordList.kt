@@ -1,4 +1,4 @@
-package com.ahadar.wordphabet.model
+package com.ahadar.wordphabet
 
 object WordList {
     val words: MutableList<String> =

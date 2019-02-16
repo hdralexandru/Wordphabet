@@ -12,7 +12,7 @@ class WordsAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false) as TextView
         return ViewHolder(view)
     }
 
@@ -21,14 +21,10 @@ class WordsAdapter(
     override fun getItemCount() = itemsList.size
 
     /* ViewHolders, ClickListener below */
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val view: TextView) : RecyclerView.ViewHolder(view) {
         fun bind(string: String, position: Int) {
-            (view as TextView).text = string
-            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.fade1 else R.color.fade2))
+            view.text = string
+            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.light_gray else R.color.white))
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemClicked(string: String)
     }
 }
