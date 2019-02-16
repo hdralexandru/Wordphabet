@@ -1,7 +1,7 @@
 package com.ahadar.wordphabet
 
 object WordList {
-    val words: MutableList<String> =
+    val WORDS: List<String> =
         mutableListOf(
             "accountant",
             "acquaintance",
@@ -406,6 +406,9 @@ object WordList {
             "yesterday"
         )
 
-    fun groupedByFirstLetter() =
-        words.groupBy { it[0] }
+
+    fun buildMapWithIndexes(words: List<String> = WORDS) = words
+        .mapIndexed { index, string -> index to string[0].toUpperCase().toString() }
+        .distinctBy { it.second }
+        .toMap()
 }

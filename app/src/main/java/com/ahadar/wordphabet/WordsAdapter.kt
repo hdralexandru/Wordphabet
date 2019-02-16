@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class WordsAdapter(
-    private val itemsList: MutableList<String> = mutableListOf()
+    private val itemsList: List<String> = listOf()
 ) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
 
@@ -21,10 +21,15 @@ class WordsAdapter(
     override fun getItemCount() = itemsList.size
 
     /* ViewHolders, ClickListener below */
-    class ViewHolder(private val view: TextView) : RecyclerView.ViewHolder(view) {
+    @SuppressWarnings("deprecated")
+    class ViewHolder(val view: TextView) : RecyclerView.ViewHolder(view) {
         fun bind(string: String, position: Int) {
             view.text = string
-            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.light_gray else R.color.white))
+            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.fade1 else R.color.white))
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClicked(string: String)
     }
 }
