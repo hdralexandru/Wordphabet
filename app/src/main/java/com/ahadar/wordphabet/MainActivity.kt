@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = WordsAdapter(WordList.WORDS)
         recylerview.adapter = adapter
+        recylerview.addItemDecoration(StickyLetterDecoration(context = applicationContext))
     }
 
 

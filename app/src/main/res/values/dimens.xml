@@ -2,5 +2,5 @@
 <resources>
     <dimen name="word_text_size">24sp</dimen>
     <dimen name="word_padding">8dp</dimen>
-    <dimen name="word_left_margin">64dp</dimen>
+    <dimen name="word_left_margin">48dp</dimen>
 </resources>
