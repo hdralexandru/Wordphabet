@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#2196F3</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="fade1">#0D2196F3</color>
-    <color name="light_gray">#1AF0EDED</color>
+    <color name="fade1">#0DD81B60</color>
+    <color name="light_gray1">#1AF0EDED</color>
+    <color name="light_gray2">#1ACACACA</color>
     <color name="white">#FFFFFF</color>
 </resources>

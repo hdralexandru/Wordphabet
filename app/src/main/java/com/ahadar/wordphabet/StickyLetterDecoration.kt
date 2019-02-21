@@ -76,7 +76,7 @@ class StickyLetterDecoration(
                  */
                 val yDrawingPosition = (currentChild.top + currentChild.translationY + relativeCoordinates.y)
                     .coerceAtLeast(relativeCoordinates.y)
-                    .coerceAtMost(prevHeaderY.toFloat())
+                    .coerceAtMost(prevHeaderY - relativeCoordinates.y - itemPadding)
                 canvas.drawText(it, relativeCoordinates.x, yDrawingPosition, textPaint)
                 prevFoundPosition = childPosition
                 prevHeaderY = yDrawingPosition
@@ -102,7 +102,6 @@ class StickyLetterDecoration(
                         .coerceAtMost(relativeCoordinates.y)
                     canvas.drawText(it, relativeCoordinates.x, yDrawingPosition, textPaint)
                 }
-
                 break
             }
         }
