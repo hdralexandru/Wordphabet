@@ -1,6 +1,6 @@
 package com.ahadar.wordphabet
 
-object WordList {
+object ListsProvider {
     val WORDS: List<String> =
         mutableListOf(
             "accountant",
@@ -406,9 +406,72 @@ object WordList {
             "yesterday"
         )
 
-
     fun buildMapWithIndexes(words: List<String> = WORDS) = words
         .mapIndexed { index, string -> index to string[0].toUpperCase().toString() }
         .distinctBy { it.second }
         .toMap()
+
+
+    private const val RED = "#FF0000"
+    private const val ORANGE = "#FF6600"
+    private const val YELLOW = "#FFFF00"
+    private const val GREEN = "#00FF00"
+    private const val BLUE = "#0000FF"
+    // 5 shades of colours is enough to prove the concept
+    val COLOURS_LIST_HEX: List<String> =
+        mutableListOf(
+            RED,
+            "#FF1A1A",
+            "#FF3333",
+            "#FF4D4D",
+            "#FF6666",
+            "#FF8080",
+            "#FF9999",
+            "#FFB3B3",
+
+            ORANGE,
+            "#FF751A",
+            "#FF8533",
+            "#FF944D",
+            "#FFA366",
+            "#FFB380",
+            "#FFC299",
+            "#FFD1B3",
+
+            YELLOW,
+            "#FFFF1A",
+            "#FFFF33",
+            "#FFFF4D",
+            "#FFFF66",
+            "#FFFF80",
+            "#FFFF99",
+            "#FFFFB3",
+
+            GREEN,
+            "#1AFF1A",
+            "#33FF33",
+            "#4DFF4D",
+            "#66FF66",
+            "#80FF80",
+            "#99FF99",
+            "#B3FFB3",
+
+            BLUE,
+            "#1A1AFF",
+            "#3333FF",
+            "#4D4DFF",
+            "#6666FF",
+            "#8080FF",
+            "#9999FF",
+            "#B3B3FF"
+
+        )
+    // Hardcoded way
+    val HEADERS_COLOURS: Map<Int, Pair<String, String>> =
+            mapOf(COLOURS_LIST_HEX.indexOf(RED) to Pair(::RED.name, RED),
+                COLOURS_LIST_HEX.indexOf(ORANGE) to Pair(::ORANGE.name, ORANGE),
+                COLOURS_LIST_HEX.indexOf(YELLOW) to Pair(::YELLOW.name, YELLOW),
+                COLOURS_LIST_HEX.indexOf(GREEN) to Pair(::GREEN.name, GREEN),
+                COLOURS_LIST_HEX.indexOf(BLUE) to Pair(::BLUE.name, BLUE)
+            )
 }

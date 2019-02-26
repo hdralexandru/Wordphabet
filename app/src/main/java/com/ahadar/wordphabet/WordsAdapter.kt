@@ -1,5 +1,6 @@
 package com.ahadar.wordphabet
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -24,7 +25,8 @@ class WordsAdapter(
     class ViewHolder(val view: TextView) : RecyclerView.ViewHolder(view) {
         fun bind(string: String, position: Int) {
             view.text = string
-            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.light_gray1 else R.color.light_gray2))
+//            view.setBackgroundColor(view.resources.getColor(if (position % 2 == 0) R.color.light_gray1 else R.color.light_gray2))
+            view.setBackgroundColor(Color.parseColor("#ff0000"))
         }
     }
 

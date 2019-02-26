@@ -2,6 +2,8 @@ package com.ahadar.wordphabet
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ahadar.wordphabet.topdecoration.TopHeaderAdapter
+import com.ahadar.wordphabet.topdecoration.TopHeaderDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -10,10 +12,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = WordsAdapter(WordList.WORDS)
-        recylerview.adapter = adapter
-        recylerview.addItemDecoration(StickyLetterDecoration(context = applicationContext))
+        hexColourRW()
     }
 
+    fun hexColourRW() {
+        recylerview.adapter = TopHeaderAdapter()
+        recylerview.addItemDecoration(TopHeaderDecoration(context = applicationContext))
+    }
+
+    fun wordsAdapter () {
+        recylerview.adapter = WordsAdapter(ListsProvider.WORDS)
+
+        recylerview.addItemDecoration(TopHeaderDecoration(context = applicationContext))
+    }
 
 }

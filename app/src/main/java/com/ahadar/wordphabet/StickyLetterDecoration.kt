@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class StickyLetterDecoration(
     context: Context,
-    words: List<String> = WordList.WORDS
+    words: List<String> = ListsProvider.WORDS
 ) : RecyclerView.ItemDecoration() {
 
     private val textPaint: TextPaint
@@ -29,12 +29,12 @@ class StickyLetterDecoration(
 
     init {
         val viewTextSize = context.resources.getDimensionPixelSize(R.dimen.word_text_size)
-        positionToInitialsMap = WordList.buildMapWithIndexes(words)
+        positionToInitialsMap = ListsProvider.buildMapWithIndexes(words)
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
             alpha = 255 //Totally visible
             typeface = Typeface.DEFAULT_BOLD // Bold text for better visibility
             textSize = viewTextSize * SCALING_FACTOR
-            color = context.resources.getColor(R.color.colorPrimary)
+            color = context.resources.getColor(R.color.initials_color)
             textAlign = Paint.Align.CENTER
         }
         val itemViewPadding = context.resources.getDimensionPixelOffset(R.dimen.word_padding)
