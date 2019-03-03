@@ -1,4 +1,4 @@
-package com.ahadar.wordphabet.topdecoration
+package com.ahadar.wordphabet.decorators.colordecorator
 
 import android.content.Context
 import android.graphics.*

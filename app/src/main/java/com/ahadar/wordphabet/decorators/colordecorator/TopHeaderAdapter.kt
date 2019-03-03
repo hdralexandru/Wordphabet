@@ -1,4 +1,4 @@
-package com.ahadar.wordphabet.topdecoration
+package com.ahadar.wordphabet.decorators.colordecorator
 
 import android.graphics.Color
 import android.view.LayoutInflater

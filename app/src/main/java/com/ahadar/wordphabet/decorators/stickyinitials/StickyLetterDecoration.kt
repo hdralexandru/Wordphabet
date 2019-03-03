@@ -1,6 +1,6 @@
 @file:Suppress("JoinDeclarationAndAssignment")
 
-package com.ahadar.wordphabet
+package com.ahadar.wordphabet.decorators.stickyinitials
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,6 +12,9 @@ import android.view.View
 import androidx.core.view.get
 import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
+import com.ahadar.wordphabet.ListsProvider
+import com.ahadar.wordphabet.Point
+import com.ahadar.wordphabet.R
 
 /**
  * A class that will draw sticky header.
@@ -23,7 +26,7 @@ class StickyLetterDecoration(
 
     private val textPaint: TextPaint
     private val positionToInitialsMap: Map<Int, String>
-    private val relativeCoordinates: Point<Float>
+    private val relativeDrawingPosition: Point<Float>
 
     private val itemPadding: Float
 
@@ -32,13 +35,13 @@ class StickyLetterDecoration(
         positionToInitialsMap = ListsProvider.buildMapWithIndexes(words)
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
             alpha = 255 //Totally visible
-            typeface = Typeface.DEFAULT_BOLD // Bold text for better visibility
+            typeface = Typeface.create(Typeface.DEFAULT_BOLD, Typeface.ITALIC) // Bold text for better visibility
             textSize = viewTextSize * SCALING_FACTOR
             color = context.resources.getColor(R.color.initials_color)
             textAlign = Paint.Align.CENTER
         }
         val itemViewPadding = context.resources.getDimensionPixelOffset(R.dimen.word_padding)
-        relativeCoordinates = Point(0f, 0f).apply {
+        relativeDrawingPosition = Point(0f, 0f).apply {
             val rawPixelsMargin = context.resources.getDimensionPixelSize(R.dimen.word_left_margin)
             /* Since we also use textAlign = CENTER, x will be
              * center of our text
@@ -57,7 +60,8 @@ class StickyLetterDecoration(
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         var prevHeaderY = Float.MAX_VALUE
-        var prevFoundPosition = NO_POSITION
+        var prevFoundPosition =
+            NO_POSITION
 
         for (initialsPosition in (parent.size - 1) downTo 0) {
             /*
@@ -74,10 +78,10 @@ class StickyLetterDecoration(
                  * that this is the first letter of our set of words. We should draw the
                  * initial on the screen
                  */
-                val yDrawingPosition = (currentChild.top + currentChild.translationY + relativeCoordinates.y)
-                    .coerceAtLeast(relativeCoordinates.y)
-                    .coerceAtMost(prevHeaderY - relativeCoordinates.y - itemPadding)
-                canvas.drawText(it, relativeCoordinates.x, yDrawingPosition, textPaint)
+                val yDrawingPosition = (currentChild.top + currentChild.translationY + relativeDrawingPosition.y)
+                    .coerceAtLeast(relativeDrawingPosition.y)
+                    .coerceAtMost(prevHeaderY - relativeDrawingPosition.y - itemPadding)
+                canvas.drawText(it, relativeDrawingPosition.x, yDrawingPosition, textPaint)
                 prevFoundPosition = childPosition
                 prevHeaderY = yDrawingPosition
             }
@@ -99,8 +103,8 @@ class StickyLetterDecoration(
                  */
                 positionToInitialsMap[initialsPosition]?.let {
                     val yDrawingPosition = (prevHeaderY - textPaint.textSize - itemPadding)
-                        .coerceAtMost(relativeCoordinates.y)
-                    canvas.drawText(it, relativeCoordinates.x, yDrawingPosition, textPaint)
+                        .coerceAtMost(relativeDrawingPosition.y)
+                    canvas.drawText(it, relativeDrawingPosition.x, yDrawingPosition, textPaint)
                 }
                 break
             }
