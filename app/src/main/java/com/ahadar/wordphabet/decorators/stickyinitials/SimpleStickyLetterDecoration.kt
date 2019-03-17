@@ -21,7 +21,7 @@ class SimpleStickyLetterDecoration(
 
     private val drawingSpace: Int
     private val textPaint: TextPaint
-    private val itemViewPadding: Float
+    private val stickyLetterPadding: Float
 
     private val positionToLayoutMap: Map<Int, StaticLayout>
 
@@ -45,7 +45,7 @@ class SimpleStickyLetterDecoration(
             color = context.resources.getColor(R.color.initials_color)
             textAlign = Paint.Align.CENTER
         }
-        itemViewPadding = context.resources.getDimensionPixelOffset(R.dimen.word_padding).toFloat()
+        stickyLetterPadding = context.resources.getDimensionPixelOffset(R.dimen.word_padding).toFloat()
         positionToLayoutMap = buildPositionToLayoutMap()
     }
 
@@ -93,29 +93,29 @@ class SimpleStickyLetterDecoration(
              * This could be very well rewritten to if (positionToLayoutMap[childPosition] != null) { ... }
              * but Kotlin is beautiful!
              */
-            positionToLayoutMap[childPosition]?.let { initialLayout ->
+            positionToLayoutMap[childPosition]?.let { stickyLetterLayout ->
                 /*
                  * "top" represents the relative position, on the screen, in the RecyclerView,
                  * from where we draw the initials. This is the TOP MARGIN.
                  */
-                val top = (view.top + view.translationY + itemViewPadding)
+                val top = (view.top + view.translationY + stickyLetterPadding)
                     /*
-                     * We ensure it is at least "itemViewPadding" pixels under the top.
+                     * We ensure it is at least "stickyLetterPadding" pixels under the top.
                      * This ensures that the letters stays in the corner.
                      */
-                    .coerceAtLeast(itemViewPadding)
+                    .coerceAtLeast(stickyLetterPadding)
                     /*
                      * We also make sure that we don't overlap with a previous initial.
                      * This order (coerceAtLeast first and then coerceAtMost) is important!
                      */
-                    .coerceAtMost(previousHeaderTop - initialLayout.height)
+                    .coerceAtMost(previousHeaderTop - stickyLetterLayout.height)
 
                 /*
                  * That's all the logic! Now we simply move to the position from where we want to start drawing
                  * with Canvas.withTranslation(...) and draw our initial.
                  */
                 canvas.withTranslation(y = top, x = drawingSpace / 4f) {
-                    initialLayout.draw(canvas)
+                    stickyLetterLayout.draw(canvas)
                 }
 
                 /*
@@ -123,7 +123,7 @@ class SimpleStickyLetterDecoration(
                  * This will help us later.
                  */
                 lastFoundPosition = childPosition
-                previousHeaderTop = top - itemViewPadding
+                previousHeaderTop = top - stickyLetterPadding
             }
 
         }
@@ -168,7 +168,7 @@ class SimpleStickyLetterDecoration(
                 positionToLayoutMap[initialsPosition]?.let {
                     // The very same logic as in the first for.
                     val top = (previousHeaderTop - it.height)
-                        .coerceAtMost(itemViewPadding)
+                        .coerceAtMost(stickyLetterPadding)
                     // We don't need "coerceAtLeast" because the position is directly relative to previous item.
                     canvas.withTranslation(y = top, x = drawingSpace / 4f) {
                         it.draw(canvas)
